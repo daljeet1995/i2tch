@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PageSpeed Insights Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+    h2 {
+      text-align: center;
+      color: #03a4ed;
+    }
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 12px 15px;
+      font-size: 16px;
+      border-radius: 33px;
+      border: 1px solid #03a4ed;
+      outline: none;
+    }
+    input[type="text"]::placeholder {
+      color: #03a4ed;
+      opacity: 0.7;
+    }
+    button {
+      background-color: #33ccc5;
+      color: white;
+      font-size: 16px;
+      padding: 12px 25px;
+      border-radius: 23px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2abbb5;
+    }
+    #result {
+      background: #f0f8ff;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    #result h3 {
+      margin-top: 0;
+      color: #03a4ed;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Website Performance Checker</h2>
+
+  <form id="psiForm">
+    <input type="text" id="websiteUrl" placeholder="Enter website URL (include https://)" required />
+    <button type="submit">Check</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("psiForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const urlInput = document.getElementById("websiteUrl");
+      const resultDiv = document.getElementById("result");
+      const url = urlInput.value.trim();
+
+      if (!url) {
+        resultDiv.innerHTML = '<p class="error">Please enter a valid URL.</p>';
+        return;
+      }
+
+      // Your Google API Key here
+      const apiKey = 'AIzaSyA2y9V9R3T4GbsOa6LJFrC3Oy7XY9DvoIA'; // Replace with your actual API key
+
+      // Construct the API request URL (mobile strategy)
+      const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${apiKey}&strategy=mobile`;
+
+      resultDiv.textContent = "Analyzing... Please wait.";
+
+      try {
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Extract relevant metrics
+        const lighthouse = data.lighthouseResult;
+        const score = Math.round(lighthouse.categories.performance.score * 100);
+        const audits = lighthouse.audits;
+
+        const fcp = audits['first-contentful-paint'].displayValue;
+        const si = audits['speed-index'].displayValue;
+        const lcp = audits['largest-contentful-paint'].displayValue;
+        const tti = audits['interactive'].displayValue;
+        const cls = audits['cumulative-layout-shift'].displayValue;
+
+        // Display results
+        resultDiv.innerHTML = `
+          <h3>Results for ${url}</h3>
+          <p><strong>Performance Score:</strong> ${score} / 100</p>
+          <p><strong>First Contentful Paint (FCP):</strong> ${fcp}</p>
+          <p><strong>Speed Index:</strong> ${si}</p>
+          <p><strong>Largest Contentful Paint (LCP):</strong> ${lcp}</p>
+          <p><strong>Time to Interactive (TTI):</strong> ${tti}</p>
+          <p><strong>Cumulative Layout Shift (CLS):</strong> ${cls}</p>
+          <p><em>Analysis based on Mobile strategy.</em></p>
+        `;
+
+      } catch (error) {
+        console.error(error);
+        resultDiv.innerHTML = `<p class="error">Failed to fetch data from PageSpeed Insights API. Please check the URL and API key.</p>`;
+      }
+    });
+  </script>
+
+</body>
+</html>

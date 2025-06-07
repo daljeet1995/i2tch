@@ -193,20 +193,10 @@ https://templatemo.com/tm-563-seo-dream
                   <div class="col-lg-12">
                     <div class="form-wrapper">
                       <form id="search" action="#" method="GET">
-                        <input type="address" id="websiteUrl" placeholder="Enter full URL (e.g. https://example.com)" required />
-                        <!-- <input type="address" name="address" placeholder="Your website URL..." autocomplete="on" required /> -->
+                        <input type="address" name="address" placeholder="Your website URL..." autocomplete="on" required />
                         <button type="submit" class="main-button">Analyze Site</button>
                       </form>
                     </div>
-                    <script>
-                        document.getElementById('search').addEventListener('submit', function (e) {
-                          e.preventDefault();
-                          const url = document.getElementById('websiteUrl').value;
-                          if (url.trim() !== '') {
-                            window.location.href = 'result.html?url=' + encodeURIComponent(url);
-                          }
-                        });
-                      </script>
 
                     <!-- <div class="main-green-button scroll-to-section">
                       <a href="#contact" class="active">Get Your Quote</a>

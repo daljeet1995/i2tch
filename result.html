@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Analysis Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px 15px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h2 {
+      color: #03a4ed;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #result {
+      background: #f0f8ff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>PageSpeed Insights Results</h2>
+    <div id="result">Loading...</div>
+     <!-- Back link here -->
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="./" style="
+      display: inline-block;
+      background-color: #03a4ed;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-family: cursive;
+      font-size: 15px;
+      transition: background-color 0.3s;
+    " onmouseover="this.style.backgroundColor='#0280b9'" onmouseout="this.style.backgroundColor='#03a4ed'">
+      ← Back to Main Website
+    </a>
+  </div>
+  </div>
+
+  <script>
+  const apiKey = 'AIzaSyA2y9V9R3T4GbsOa6LJFrC3Oy7XY9DvoIA'; // Replace with your API key
+  const params = new URLSearchParams(window.location.search);
+  const url = params.get('url');
+
+  async function fetchData(siteUrl) {
+    const resultDiv = document.getElementById('result');
+    if (!siteUrl) {
+      resultDiv.innerHTML = '<p class="error">No URL provided.</p>';
+      return;
+    }
+
+    try {
+      const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(siteUrl)}&key=${apiKey}&strategy=mobile`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+
+      if (!data.lighthouseResult) {
+        throw new Error("Invalid response from API");
+      }
+
+      const lighthouse = data.lighthouseResult;
+      const score = Math.round(lighthouse.categories.performance.score * 100);
+      const audits = lighthouse.audits;
+
+      const fcp = audits['first-contentful-paint'].displayValue;
+      const si = audits['speed-index'].displayValue;
+      const lcp = audits['largest-contentful-paint'].displayValue;
+      const tti = audits['interactive'].displayValue;
+      const cls = audits['cumulative-layout-shift'].displayValue;
+
+      // Define performance label based on score
+      let performanceLabel = '';
+      let labelColor = '';
+
+      if (score < 50) {
+        performanceLabel = 'Very Bad';
+        labelColor = 'red';
+      } else if (score < 70) {
+        performanceLabel = 'Needs Improvement';
+        labelColor = 'orange';
+      } else if (score < 90) {
+        performanceLabel = 'Good';
+        labelColor = 'green';
+      } else {
+        performanceLabel = 'Excellent';
+        labelColor = 'darkgreen';
+      }
+
+      // Output the result
+      resultDiv.innerHTML = `
+        <p><strong>URL:</strong> ${siteUrl}</p>
+        <p><strong>Performance Score:</strong> ${score} / 100 
+          <span style="color: ${labelColor}; font-weight: bold;">(${performanceLabel})</span>
+        </p>
+        <p><strong>First Contentful Paint (FCP):</strong> ${fcp}</p>
+        <p><strong>Speed Index:</strong> ${si}</p>
+        <p><strong>Largest Contentful Paint (LCP):</strong> ${lcp}</p>
+        <p><strong>Time to Interactive (TTI):</strong> ${tti}</p>
+        <p><strong>Cumulative Layout Shift (CLS):</strong> ${cls}</p>
+        <p><em>Test strategy: Mobile</em></p>
+      `;
+
+    } catch (error) {
+      console.error(error);
+      resultDiv.innerHTML = `<p class="error">Failed to load analysis. Please check the URL and try again.</p>`;
+    }
+  }
+
+  fetchData(url);
+</script>
+
+</body>
+</html>
