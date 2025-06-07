@@ -198,15 +198,7 @@ https://templatemo.com/tm-563-seo-dream
                         <button type="submit" class="main-button">Analyze Site</button>
                       </form>
                     </div>
-                    <script>
-                        document.getElementById('search').addEventListener('submit', function (e) {
-                          e.preventDefault();
-                          const url = document.getElementById('websiteUrl').value;
-                          if (url.trim() !== '') {
-                            window.location.href = 'result.html?url=' + encodeURIComponent(url);
-                          }
-                        });
-                      </script>
+                    
 
                     <!-- <div class="main-green-button scroll-to-section">
                       <a href="#contact" class="active">Get Your Quote</a>
@@ -667,7 +659,7 @@ https://templatemo.com/tm-563-seo-dream
     <div class="container">
       <div class="row">
         <div class="col-lg-12 wow fadeInUp" data-wow-duration="0s" data-wow-delay="0s">
-          <form id="contact" action="" method="post">
+          <form id="contact" class="contactForm" method="post">
             <div class="row">
               <div class="col-lg-6 offset-lg-3">
                 <div class="section-heading">
@@ -707,11 +699,15 @@ https://templatemo.com/tm-563-seo-dream
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
-                      <button type="submit" id="form-submit" class="main-button ">Send Message Now</button>
+                      <button type="submit" id="form-submit" class="main-button submitConForm">Send Message Now</button>
                     </fieldset>
+                    <div id="msg" style="color: red;"></div>
                   </div>
                 </div>
               </div>
+              
+              
+
               <!-- <div class="col-lg-3">
                 <div class="contact-info">
                   <ul>
@@ -764,6 +760,35 @@ https://templatemo.com/tm-563-seo-dream
   <script src="assets/js/animation.js"></script>
   <script src="assets/js/imagesloaded.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script>
+    document.getElementById('search').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const url = document.getElementById('websiteUrl').value;
+      if (url.trim() !== '') {
+        window.location.href = 'result.html?url=' + encodeURIComponent(url);
+      }
+    });
+  </script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+  <script>
+        jQuery('.contactForm').on('submit',function(e){
+        e.preventDefault();
+        //alert('sd');
+        jQuery('#msg').html('Please wait...');
+        jQuery('.submitConForm').attr('disabled',true);
+        jQuery.ajax({
+          url:'https://script.google.com/macros/s/AKfycbzQuC0Nf6Jf3XKY1ZZHDOQCshwvz4SJy44yf7XS-DdG-e9HrsyqrgiHVzYp18bOcJyBNw/exec',
+          type:'post',
+          data:jQuery('.contactForm').serialize(),
+          success:function(result){
+            jQuery('.contactForm')[0].reset();
+            jQuery('#msg').html('Thank You');
+            jQuery('.submitConForm').attr('disabled',false);
+            //window.location.href='';
+          }
+        });
+        });
+    </script>
 
 </body>
 
