@@ -22,6 +22,86 @@
   <link rel="stylesheet" href="assets/css/templatemo-seo-dream.css">
   <link rel="stylesheet" href="assets/css/animated.css">
   <link rel="stylesheet" href="assets/css/owl.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .form-wrapper {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 0 15px;
+    }
+
+    form#search {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="address"] {
+      background-color: #03a4ed;
+      color: #fff;
+      font-style: oblique;
+      font-size: 15px;
+      font-family: cursive;
+      letter-spacing: 0.25px;
+      padding: 0 25px;
+      height: 60px;
+      border: none;
+      border-radius: 33px;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input::placeholder {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    button.main-button {
+      background-color: #33ccc5;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 25px;
+      border-radius: 23px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button.main-button:hover {
+      background-color: #2abbb5;
+    }
+
+    /* Responsive: side by side layout on desktop */
+    @media screen and (min-width: 768px) {
+      form#search {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      input[type="address"] {
+        flex: 1;
+        margin-right: 10px;
+        margin-bottom: 0;
+      }
+
+      button.main-button {
+        width: auto;
+        white-space: nowrap;
+        padding: 15px 30px;
+        height: 60px;
+      }
+    }
+  </style>
+
   <!--
 
 TemplateMo 563 SEO Dream
@@ -111,46 +191,12 @@ https://templatemo.com/tm-563-seo-dream
                     <h2>SEO &amp; Digital Marketing Agency</h2>
                   </div>
                   <div class="col-lg-12">
-                    <form id="search" action="#" method="GET">
-                      <fieldset>
-                        <input type="address" name="address" class="email" placeholder="Your website URL..."
-                          autocomplete="on" required="" style="
-    width: 470px;
-    height: 66px;
-    background-color: #03a4ed;
-    border-radius: 33px;
-    border: none;
-    outline: none;
-    padding: 0px 25px;
-    font-style: oblique;
-    color: #fff !important;
-    letter-spacing: 0.25px;
-    font-size: 15px;
-    font-weight: 400;
-    font-family: cursive;
-">
-                      </fieldset>
-                      <fieldset>
-                        <button type="submit" class="main-button" style="
-    border-bottom: 2px solid #4771cb !important;
-    transition: all .3s;
-    position: absolute;
-    right: 36px;
-    top: 374px;
-    display: inline-block;
-    background-color: #33ccc5;
-    font-size: 15px;
-    font-weight: 500;
-    color: #fff;
-    text-transform: capitalize;
-    padding: 12px 25px;
-    border-radius: 23px;
-    letter-spacing: 0.25px;
-    outline: none;
-    border: none;
-">Analyze Site</button>
-                      </fieldset>
-                    </form>
+                    <div class="form-wrapper">
+                      <form id="search" action="#" method="GET">
+                        <input type="address" name="address" placeholder="Your website URL..." autocomplete="on" required />
+                        <button type="submit" class="main-button">Analyze Site</button>
+                      </form>
+                    </div>
 
                     <!-- <div class="main-green-button scroll-to-section">
                       <a href="#contact" class="active">Get Your Quote</a>
