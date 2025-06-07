@@ -654,63 +654,86 @@ https://templatemo.com/tm-563-seo-dream
       </div>
     </div>
   </div>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <div id="contact" class="contact-us section">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 wow fadeInUp" data-wow-duration="0s" data-wow-delay="0s">
           <form id="contact" class="contactForm" method="post">
-  <div class="row">
-    <div class="col-lg-6 offset-lg-3">
-      <div class="section-heading">
-        <h6>Contact Us</h6>
-        <h2>Fill Out The Form Below To <span>Get</span> In <em>Touch</em> With Us</h2>
-      </div>
-    </div>
+            <div class="row">
+              <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                  <h6>Contact Us</h6>
+                  <h2>Fill Out The Form Below To <span>Get</span> In <em>Touch</em> With Us</h2>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="surname" name="surname" id="surname" placeholder="Surname" autocomplete="on"
+                        required>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email"
+                        required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="subject" name="subject" id="subject" placeholder="Subject" autocomplete="on">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <textarea name="message" type="text" class="form-control" id="message" placeholder="Message"
+                        required=""></textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="main-button submitConForm">Send Message Now</button>
+                    </fieldset>
+                    <div id="msg" style="color: red;"></div>
+                  </div>
+                </div>
+              </div>
+              
+              
 
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-6">
-          <fieldset>
-            <input type="text" name="name" id="name" placeholder="Name" required>
-          </fieldset>
-        </div>
-        <div class="col-lg-6">
-          <fieldset>
-            <input type="text" name="surname" id="surname" placeholder="Surname" required>
-          </fieldset>
-        </div>
-        <div class="col-lg-6">
-          <fieldset>
-            <input type="email" name="email" id="email" placeholder="Your Email" required>
-          </fieldset>
-        </div>
-        <div class="col-lg-6">
-          <fieldset>
-            <input type="text" name="subject" id="subject" placeholder="Subject">
-          </fieldset>
-        </div>
-        <div class="col-lg-12">
-          <fieldset>
-            <textarea name="message" id="message" class="form-control" placeholder="Message" required></textarea>
-          </fieldset>
-        </div>
-        <div class="col-lg-12">
-          <!-- Google reCAPTCHA -->
-          <div class="g-recaptcha" data-sitekey="6LfqulgrAAAAAN2mIlbwzMb-MaJoYq91eKGBr4FT"></div>
-        </div>
-        <div class="col-lg-12">
-          <fieldset>
-            <button type="submit" id="form-submit" class="main-button submitConForm">Send Message Now</button>
-          </fieldset>
-          <div id="msg" style="color: red; margin-top:10px;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
-
+              <!-- <div class="col-lg-3">
+                <div class="contact-info">
+                  <ul>
+                    <li>
+                      <div class="icon">
+                        <img src="assets/images/contact-icon-01.png" alt="email icon">
+                      </div>
+                      <a href="#">info@company.com</a>
+                    </li>
+                    <li>
+                      <div class="icon">
+                        <img src="assets/images/contact-icon-02.png" alt="phone">
+                      </div>
+                      <a href="#">+001-002-0034</a>
+                    </li>
+                    <li>
+                      <div class="icon">
+                        <img src="assets/images/contact-icon-03.png" alt="location">
+                      </div>
+                      <a href="#">26th Street, Digital Villa</a>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -748,46 +771,24 @@ https://templatemo.com/tm-563-seo-dream
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script>
-  jQuery('.contactForm').on('submit', function(e) {
-    e.preventDefault();
-
-    var name = jQuery('#name').val().trim();
-    var surname = jQuery('#surname').val().trim();
-    var email = jQuery('#email').val().trim();
-    var message = jQuery('#message').val().trim();
-    var recaptchaResponse = grecaptcha.getResponse();
-
-    if (!name || !surname || !email || !message) {
-      jQuery('#msg').html('Please fill all required fields.');
-      return;
-    }
-
-    if (recaptchaResponse.length === 0) {
-      jQuery('#msg').html('Please verify you are not a robot.');
-      return;
-    }
-
-    jQuery('#msg').html('Please wait...');
-    jQuery('.submitConForm').attr('disabled', true);
-
-    jQuery.ajax({
-      url: 'https://script.google.com/macros/s/AKfycbzQuC0Nf6Jf3XKY1ZZHDOQCshwvz4SJy44yf7XS-DdG-e9HrsyqrgiHVzYp18bOcJyBNw/exec',
-      type: 'POST',
-      data: jQuery('.contactForm').serialize(),
-      success: function(result) {
-        jQuery('.contactForm')[0].reset();
-        grecaptcha.reset(); // Reset CAPTCHA
-        jQuery('#msg').css('color', 'green').html('Thank you! Your message has been sent.');
-        jQuery('.submitConForm').attr('disabled', false);
-      },
-      error: function() {
-        jQuery('#msg').css('color', 'red').html('There was an error sending the message. Please try again later.');
-        jQuery('.submitConForm').attr('disabled', false);
-      }
-    });
-  });
-</script>
-
+        jQuery('.contactForm').on('submit',function(e){
+        e.preventDefault();
+        //alert('sd');
+        jQuery('#msg').html('Please wait...');
+        jQuery('.submitConForm').attr('disabled',true);
+        jQuery.ajax({
+          url:'https://script.google.com/macros/s/AKfycbzQuC0Nf6Jf3XKY1ZZHDOQCshwvz4SJy44yf7XS-DdG-e9HrsyqrgiHVzYp18bOcJyBNw/exec',
+          type:'post',
+          data:jQuery('.contactForm').serialize(),
+          success:function(result){
+            jQuery('.contactForm')[0].reset();
+            jQuery('#msg').html('Thank You');
+            jQuery('.submitConForm').attr('disabled',false);
+            //window.location.href='';
+          }
+        });
+        });
+    </script>
 
 </body>
 
